@@ -1,7 +1,7 @@
 <?php
 /*
 	Plugin Name: WP Compiler
-	Plugin URI: https://bytes.co
+	Plugin URI: https://github.com/burlingtonbytes/WP-Compiler
 	Description: Compiles and minifies SCSS, LESS and JS
 	Author: Bytes Co
 	Author URI: https://bytes.co
