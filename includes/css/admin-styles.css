@@ -1,0 +1,92 @@
+.compiler-settings-wrapper,
+.compiler-settings-wrapper:before,
+.compiler-settings-wrapper:after,
+.compiler-settings-wrapper *,
+.compiler-settings-wrapper *:before,
+.compiler-settings-wrapper *:after {
+	box-sizing: border-box;
+}
+.compiler-settings-wrapper {
+	max-width: 50%;
+}
+@media (max-width: 768px) {
+	.compiler-settings-wrapper {
+		max-width: 90%;
+	}
+}
+
+.compiler-settings-wrapper .repeater {
+	width: 100%;
+	padding: 15px;
+	display: block;
+	box-shadow: 0 0 10px rgba(0,0,0,0.5);
+	margin-bottom: 30px;
+	background-color: #ffffff;
+	border-radius: 5px;
+}
+.compiler-settings-wrapper .repeater label, .compiler-settings-wrapper .repeater input {
+	width: 100%;
+	display: block;
+	margin-bottom: 20px;
+}
+.compiler-settings-wrapper .repeater .buttons {
+	float: right;
+	text-align: right;
+}
+.compiler-settings-wrapper .repeater .buttons .edit-source {
+	padding-right: 15px;
+}
+.compiler-settings-wrapper .repeater .buttons .remove-repeater {
+	padding-right: 15px;
+}
+.compiler-settings-wrapper .dashicons {
+	text-decoration: none;
+}
+.compiler-settings-wrapper dl {
+	max-width: 500px;
+	background-color: #ffffff;
+	padding: 25px;
+	border-radius: 5px;
+	box-shadow: 0 0 10px rgba(0,0,0,0.5);
+	margin-bottom: 30px;
+}
+.compiler-settings-wrapper .compiler-source-edit {
+	display: none;
+	padding: 15px 0;
+}
+.compiler-settings-wrapper .repeater h3 {
+	text-transform: uppercase;
+	margin-top: 0;
+}
+.compiler-settings-wrapper .repeater.editing .compiler-source-edit {
+	display: block;
+}
+.compiler-settings-wrapper .repeater.editing .compiler-source-display {
+	display: none;
+}
+.compiler-settings-wrapper .repeater.editing .edit-source {
+	display: none;
+}
+
+.compiler-settings-wrapper .button-add-source {
+	border-radius: 50%;
+	display: block;
+	text-align: center;
+	width: 50px;
+	height: 50px;
+	margin: -50px auto 0;
+	padding: 0;
+	box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+}
+.compiler-settings-wrapper .button-add-source .dashicons {
+	display: block;
+	margin: 0;
+	padding: 0;
+	font-size: 30px;
+	line-height: 50px;
+	width: 50px;
+	height: 50px;
+	margin-left: -1px;
+    margin-top: 2px;
+    color: #555;
+}

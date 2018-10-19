@@ -1,0 +1,10 @@
+# ignore Editor files
+*.sublime-project
+*.sublime-workspace
+*.komodoproject
+*.idea
+
+# ignore OS generated files
+ehthumbs.db
+.DS_Store
+Thumbs.db
