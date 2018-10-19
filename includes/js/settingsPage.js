@@ -124,6 +124,11 @@
 			$source.css('border', 'none');
 			$target.css('border', 'none');
 			$type.css('border', 'none');
+
+			if( !type_val && !source_val && !target_val ) {
+				return;
+			}
+
 			if (type_val) {
 				if (type_val === 'js') {
 					target_type = 'js';
@@ -135,7 +140,7 @@
 				$type.css('border', '2px solid red');
 				inner_flag = true;
 			}
-			if ( !source_val || target_type !== 'js' && ( source_val.substr( ( source_val.length - type_val.length )) !== type_val ) ) {
+			if ( !source_val ) {
 				$source.css('border', '2px solid red');
 				inner_flag = true;
 			}
