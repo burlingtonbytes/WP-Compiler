@@ -1,8 +1,8 @@
 === WP Compiler ===
 Contributors: burlingtonbytes gschoppe
-Tags: comments, spam
+Tags: sass, scss, less, compiled, styles, workflow, build tools, minified, minify, uglify, uglified, combined, manifest, include, enqueue, grunt, gulp, webpack
 Requires at least: 4.8
-Tested up to: 4.9.8
+Tested up to: 5.0
 Requires PHP: 5.6
 Stable tag: trunk
 License: GPLv2 or later
