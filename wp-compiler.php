@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 require_once 'vendor/autoload.php';
 
-use Leafo\ScssPhp\Compiler;
+use ScssPhp\ScssPhp\Compiler;
 use MatthiasMullie\Minify\Minify as Minify;
 if ( ! class_exists( "WP_Compiler" ) ) {
 	class WP_Compiler {
@@ -396,9 +396,9 @@ if ( ! class_exists( "WP_Compiler" ) ) {
 								'sourceMapRootpath' => '',
 								'sourceMapBasepath' => $directory
 							));
-							$formatter = "Leafo\ScssPhp\Formatter\Nested";
+							$formatter = "ScssPhp\ScssPhp\Formatter\Nested";
 						} else {
-							$formatter = "Leafo\ScssPhp\Formatter\Compressed";
+							$formatter = "ScssPhp\ScssPhp\Formatter\Compressed";
 						}
 						$scss->setFormatter( $formatter );
 						$compiled_css = apply_filters( 'wp_compiler_compiled_scss', $scss->compile( '@import "' . basename( $source ) . '"' ) );
