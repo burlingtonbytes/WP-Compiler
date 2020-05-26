@@ -22,7 +22,7 @@ Specific issues with the underlying compilation libraries should be submitted to
 == Installation ==
  
 1. Download the plugin file to your system and unzip it
-1. Using an FTP program, or your hosting control panel, upload the unzipped plugin folder to your WordPress installation�s wp-content/plugins/ directory
+1. Using an FTP program, or your hosting control panel, upload the unzipped plugin folder to your WordPress installation's wp-content/plugins/ directory
 1. Activate the plugin from the Plugins menu within the WordPress admin
 1. Go to Settings -> Compiler Settings
 1. Set the paths to your source CSS and JS files and the targets they compile to
