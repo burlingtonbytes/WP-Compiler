@@ -16,13 +16,13 @@ Harness the power of pre-processed CSS and minified JS in your theme or plugin, 
 
 When you're ready to launch a new site, just turn off Dev Mode, and your styles and javascript will be compiled & minimized and comments & source maps will be removed. With Dev mode disabled, Compiler will stop watching source directories, so there is no effect on site performance, but you can still apply a quick change at any time, by clicking the compile button in the admin toolbar.
 
-WP Compiler relies on [scssphp](http://leafo.github.io/scssphp/), [lessphp](http://lessphp.typesettercms.com/), and [minify](https://www.minifier.org/).
+WP Compiler relies on [scssphp](https://scssphp.github.io/scssphp/), [lessphp](http://lessphp.typesettercms.com/), and [minify](https://www.minifier.org/).
 Specific issues with the underlying compilation libraries should be submitted to their respective developers.
 
 == Installation ==
  
 1. Download the plugin file to your system and unzip it
-1. Using an FTP program, or your hosting control panel, upload the unzipped plugin folder to your WordPress installation’s wp-content/plugins/ directory
+1. Using an FTP program, or your hosting control panel, upload the unzipped plugin folder to your WordPress installation's wp-content/plugins/ directory
 1. Activate the plugin from the Plugins menu within the WordPress admin
 1. Go to Settings -> Compiler Settings
 1. Set the paths to your source CSS and JS files and the targets they compile to

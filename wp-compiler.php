@@ -14,9 +14,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 require_once 'vendor/autoload.php';
 
-use Leafo\ScssPhp\Compiler;
+use ScssPhp\ScssPhp\Compiler;
 use MatthiasMullie\Minify\Minify as Minify;
-if ( ! class_exists( "WP_Compiler" ) ) {
+if ( ! class_exists( 'WP_Compiler' ) ) {
 	class WP_Compiler {
 		public static $version = 'v1.0.0';
 		private static $_this;
@@ -39,17 +39,17 @@ if ( ! class_exists( "WP_Compiler" ) ) {
 			$this->plugin_dir     = dirname( __FILE__ );
 			$this->plugin_dir_url = plugin_dir_url( __FILE__ );
 			$this->options        = $this->get_options();
-			$this->now            = date( "Y-m-d g:i:s e" );
+			$this->now            = date( 'Y-m-d g:i:s e' );
 			add_action( 'init', array( $this, 'watch_src_folders' ) );
-			add_action( 'admin_bar_menu', array( $this, "add_compiler_button" ), 999 );
+			add_action( 'admin_bar_menu', array( $this, 'add_compiler_button' ), 999 );
 			add_action( 'admin_post_wp_compiler_compile', array( $this, 'process_compile_request' ) );
 			add_action( 'admin_post_wp_compiler_compile_dev_mode', array( $this, 'process_dev_mode_request' ) );
 			add_action( 'admin_head', array( $this, 'adminbar_style' ) );
 			add_action( 'wp_head', array( $this, 'adminbar_style' ) );
-			add_filter( 'wp_compiler_dev_mode', array( $this, "announce_dev_mode" ) );
+			add_filter( 'wp_compiler_dev_mode', array( $this, 'announce_dev_mode' ) );
 			add_filter( 'wp_compiler_script_version', array( $this, 'compiler_script_version' ), 10, 2 );
 			add_filter( 'wp_compiler_style_version', array( $this, 'compiler_style_version' ), 10, 2 );
-			add_filter( 'bbytes_dev_utils_dev_mode', array( $this, "announce_dev_mode" ) );
+			add_filter( 'bbytes_dev_utils_dev_mode', array( $this, 'announce_dev_mode' ) );
 			add_filter( 'bbytes_compiler_script_version', array( $this, 'compiler_script_version' ), 10, 2 );
 			add_filter( 'bbytes_compiler_style_version', array( $this, 'compiler_style_version' ), 10, 2 );
 			add_action( 'admin_menu', array( $this, 'make_options_page' ) );
@@ -84,8 +84,8 @@ if ( ! class_exists( "WP_Compiler" ) ) {
 			$path_variables = self::get_path_vars();
 			wp_register_script( 'compiler-settings', $this->plugin_dir_url . '/includes/js/settingsPage.js' );
 			wp_enqueue_style( 'compiler-admin-styles', $this->plugin_dir_url . 'includes/css/admin-styles.css' );
-			wp_localize_script('compiler-settings','wp_compiler_paths', $path_variables);
-			wp_enqueue_script('compiler-settings');
+			wp_localize_script( 'compiler-settings', 'wp_compiler_paths', $path_variables );
+			wp_enqueue_script( 'compiler-settings' );
 		}
 
 		public function make_options_page() {
@@ -130,7 +130,7 @@ if ( ! class_exists( "WP_Compiler" ) ) {
 			$dev_mode = $this->options['dev_mode'];
 			$args     = array(
 				'id'   => 'wp_compiler_compile',
-				'href' => admin_url( 'admin-post.php' ) . '?action=wp_compiler_compile'
+				'href' => admin_url( 'admin-post.php' ) . '?action=wp_compiler_compile',
 			);
 			if ( ! $dev_mode ) {
 				$args['title'] = __( 'Compile', 'wp_compiler' );
@@ -144,7 +144,7 @@ if ( ! class_exists( "WP_Compiler" ) ) {
 				'parent' => 'wp_compiler_compile',
 				'id'     => 'wp_compiler_compile_toggler',
 				'href'   => admin_url( 'admin-post.php' ) . '?action=wp_compiler_compile_dev_mode',
-				'meta'   => array( 'class' => 'wp_compiler_compile_dev_mode' )
+				'meta'   => array( 'class' => 'wp_compiler_compile_dev_mode' ),
 			);
 			if ( ! $dev_mode ) {
 				$args['title'] = __( 'Enable Dev Mode', 'wp_compiler' );
@@ -175,11 +175,11 @@ if ( ! class_exists( "WP_Compiler" ) ) {
 			$dev_mode = (bool) $this->options['dev_mode'];
 			$user_id  = get_current_user_id();
 			if ( $user_id && user_can( $user_id, 'switch_themes' ) ) {
-				if ($dev_mode) {
+				if ( $dev_mode ) {
 					$files = $this->get_sourcemap_filenames();
-					foreach ($files as $file) {
-						if (file_exists($file)) {
-							unlink($file);
+					foreach ( $files as $file ) {
+						if ( file_exists( $file ) ) {
+							unlink( $file );
 						}
 					}
 				}
@@ -218,7 +218,7 @@ if ( ! class_exists( "WP_Compiler" ) ) {
 				'theme'   => trailingslashit( get_stylesheet_directory() ),
 				'parent'  => trailingslashit( get_template_directory() ),
 				'plugins' => trailingslashit( WP_PLUGIN_DIR ),
-				'uploads' => trailingslashit( self::get_uploads_dir() )
+				'uploads' => trailingslashit( self::get_uploads_dir() ),
 			);
 			$path_variables = apply_filters( 'bbytes_compiler_path_variables', $path_variables );
 			$path_variables = apply_filters( 'wp_compiler_path_variables', $path_variables );
@@ -232,7 +232,7 @@ if ( ! class_exists( "WP_Compiler" ) ) {
 				return $upload_array['basedir'];
 			}
 
-			return "";
+			return '';
 		}
 
 		protected function redirect_to_referrer() {
@@ -250,7 +250,7 @@ if ( ! class_exists( "WP_Compiler" ) ) {
 					'dev_mode'       => false,
 					'folder_hashes'  => array(),
 					'output_hashes'  => array(),
-					'error_messages' => array()
+					'error_messages' => array(),
 				);
 				$options         = get_option( 'WP_Compiler_Options', $default_options );
 				if ( ! is_array( $options ) ) {
@@ -294,19 +294,19 @@ if ( ! class_exists( "WP_Compiler" ) ) {
 			return $string;
 		}
 
-		protected function get_sourcemap_filenames () {
+		protected function get_sourcemap_filenames() {
 			$sources = get_option( 'wp_compiler_sources', array() );
 			$targets = array();
-			if( !is_array( $sources ) ) {
+			if ( ! is_array( $sources ) ) {
 				$sources = array();
 			}
 			$sources = apply_filters( 'wp_compiler_register_sources', $sources );
-			if( !empty( $sources ) ) {
-				foreach( $sources as $source_item ) {
-					if( !empty( $source_item['type'] ) && !empty( $source_item['source'] ) && !empty( $source_item['target'] ) ) {
+			if ( ! empty( $sources ) ) {
+				foreach ( $sources as $source_item ) {
+					if ( ! empty( $source_item['type'] ) && ! empty( $source_item['source'] ) && ! empty( $source_item['target'] ) ) {
 						$target = $this->parse_compiler_source_options( $source_item['target'] );
-						if( $source_item['type'] == 'scss' || $source_item['type'] == 'less') {
-							$targets[] = $this->get_sourcemap_filename_from_file($target);
+						if ( $source_item['type'] == 'scss' || $source_item['type'] == 'less' ) {
+							$targets[] = $this->get_sourcemap_filename_from_file( $target );
 						}
 					}
 				}
@@ -330,14 +330,14 @@ if ( ! class_exists( "WP_Compiler" ) ) {
 					if ( ! empty( $source_item['type'] ) && ! empty( $source_item['source'] ) && ! empty( $source_item['target'] ) ) {
 						$source = $this->parse_compiler_source_options( $source_item['source'] );
 						$target = $this->parse_compiler_source_options( $source_item['target'] );
-						if ( $source_item['type'] == 'js' || $source_item['type'] == 'js-manifest') {
+						if ( $source_item['type'] == 'js' || $source_item['type'] == 'js-manifest' ) {
 							$this->compile_js( $source, $target, $force_compile );
 						} elseif ( $source_item['type'] == 'scss' ) {
 							$this->compile_scss( $source, $target, $force_compile );
 						} elseif ( $source_item['type'] == 'less' ) {
 							$this->compile_less( $source, $target, $force_compile );
 						} else {
-							$error = "unknown source type " . $source_item['type'];
+							$error = 'unknown source type ' . $source_item['type'];
 							$this->set_error_message( $error, 'unknown' );
 						}
 					}
@@ -372,11 +372,11 @@ if ( ! class_exists( "WP_Compiler" ) ) {
 		protected function compile_scss( $source, $target, $force_compile = false ) {
 			$directory = dirname( $source );
 			if ( is_file( $source ) ) {
-				$current_hash = "";
+				$current_hash = '';
 				if ( ! $force_compile ) {
 					$current_hash = $this->get_directory_hash( $directory );
 				}
-				$saved_hash = "";
+				$saved_hash = '';
 				if ( isset( $this->options['folder_hashes'][ $directory ]['css'] ) ) {
 					$saved_hash = $this->options['folder_hashes'][ $directory ]['css'];
 				}
@@ -385,44 +385,46 @@ if ( ! class_exists( "WP_Compiler" ) ) {
 						$scss = new Compiler();
 						$scss->setImportPaths( $directory );
 						if ( $this->announce_dev_mode() ) {
-							$map_target = $this->get_sourcemap_filename_from_file($target);
-							$scss->setSourceMap(Compiler::SOURCE_MAP_FILE);
-							$scss->setSourceMapOptions(array(
-								'sourceRoot' => '',
-								'sourceMapFilename' => null,
-								'sourceMapURL' => null,
-								'sourceMapWriteTo' => $map_target,
-								'outputSourceFiles' => false,
-								'sourceMapRootpath' => '',
-								'sourceMapBasepath' => $directory
-							));
-							$formatter = "Leafo\ScssPhp\Formatter\Nested";
+							$map_target = $this->get_sourcemap_filename_from_file( $target );
+							$scss->setSourceMap( Compiler::SOURCE_MAP_FILE );
+							$scss->setSourceMapOptions(
+								array(
+									'sourceRoot'        => '',
+									'sourceMapFilename' => null,
+									'sourceMapURL'      => null,
+									'sourceMapWriteTo'  => $map_target,
+									'outputSourceFiles' => false,
+									'sourceMapRootpath' => '',
+									'sourceMapBasepath' => $directory,
+								)
+							);
+							$formatter = 'ScssPhp\ScssPhp\Formatter\Nested';
 						} else {
-							$formatter = "Leafo\ScssPhp\Formatter\Compressed";
+							$formatter = 'ScssPhp\ScssPhp\Formatter\Compressed';
 						}
 						$scss->setFormatter( $formatter );
 						$compiled_css = apply_filters( 'wp_compiler_compiled_scss', $scss->compile( '@import "' . basename( $source ) . '"' ) );
 						$compiled_css = apply_filters( 'wp_compiler_compiled_css', $compiled_css );
 					} catch ( Exception $e ) {
-						$current_hash = "";
-						$error        = str_replace( trailingslashit( ABSPATH ), "", addslashes( $e->getMessage() ) );
+						$current_hash = '';
+						$error        = str_replace( trailingslashit( ABSPATH ), '', addslashes( $e->getMessage() ) );
 						$compiled_css = $this->generate_css_error_message( $error );
 						$this->set_error_message( $error, 'scss' );
 					}
 					ob_start();
 					include 'includes/templates/css-header.php';
 					$prefix = ob_get_clean() . "\n";
-					//TODO -- FILTER PREFIX COMMENT?
+					// TODO -- FILTER PREFIX COMMENT?
 					$output_dir = dirname( $target );
 					if ( ! is_dir( $output_dir ) ) {
 						mkdir( $output_dir, 0755, true );
 					}
-					$output_hash                                         = hash( 'crc32b', $target );
+					$output_hash = hash( 'crc32b', $target );
 					$this->options['output_hashes'][ $directory ]['css'] = $output_hash;
-					$result                                              = file_put_contents( $target, $prefix . $compiled_css );
+					$result = file_put_contents( $target, $prefix . $compiled_css );
 					if ( $result === false ) {
-						//TODO -- RAISE ERRORS IN A LOGICAL WAY
-						$error = "error writing to file " . $target;
+						// TODO -- RAISE ERRORS IN A LOGICAL WAY
+						$error = 'error writing to file ' . $target;
 						$this->set_error_message( $error, 'scss' );
 					} else {
 						if ( ! isset( $this->options['folder_hashes'][ $directory ] ) ) {
@@ -433,7 +435,7 @@ if ( ! class_exists( "WP_Compiler" ) ) {
 					}
 				}
 			} else {
-				$error = "file not found " . $source;
+				$error = 'file not found ' . $source;
 				$this->set_error_message( $error, 'scss' );
 			}
 		}
@@ -441,11 +443,11 @@ if ( ! class_exists( "WP_Compiler" ) ) {
 		protected function compile_less( $source, $target, $force_compile = false ) {
 			$directory = dirname( $source );
 			if ( is_file( $source ) ) {
-				$current_hash = "";
+				$current_hash = '';
 				if ( ! $force_compile ) {
 					$current_hash = $this->get_directory_hash( $directory );
 				}
-				$saved_hash = "";
+				$saved_hash = '';
 				if ( isset( $this->options['folder_hashes'][ $directory ]['css'] ) ) {
 					$saved_hash = $this->options['folder_hashes'][ $directory ]['css'];
 				}
@@ -454,13 +456,13 @@ if ( ! class_exists( "WP_Compiler" ) ) {
 						if ( $this->announce_dev_mode() ) {
 							$options = array(
 								'sourceMap'        => true,
-								'sourceMapWriteTo' => $this->get_sourcemap_filename_from_file($target),
-								'sourceMapURL'     => $this->get_sourcemap_filename_from_file($target),
-								'cache_dir'        => self::get_uploads_dir() . '/compiler_cache/'
+								'sourceMapWriteTo' => $this->get_sourcemap_filename_from_file( $target ),
+								'sourceMapURL'     => $this->get_sourcemap_filename_from_file( $target ),
+								'cache_dir'        => self::get_uploads_dir() . '/compiler_cache/',
 							);
 						} else {
 							$options = array(
-								'compress'  => true
+								'compress' => true,
 							);
 						}
 						$less = new Less_Parser( $options );
@@ -468,25 +470,25 @@ if ( ! class_exists( "WP_Compiler" ) ) {
 						$compiled_css = apply_filters( 'wp_compiler_compiled_less', $less->getCss() );
 						$compiled_css = apply_filters( 'wp_compiler_compiled_css', $compiled_css );
 					} catch ( Exception $e ) {
-						$current_hash = "";
-						$error        = str_replace( trailingslashit( ABSPATH ), "", addslashes( $e->getMessage() ) );
+						$current_hash = '';
+						$error        = str_replace( trailingslashit( ABSPATH ), '', addslashes( $e->getMessage() ) );
 						$compiled_css = $this->generate_css_error_message( $error );
 						$this->set_error_message( $error, 'less' );
 					}
 					ob_start();
 					include 'includes/templates/css-header.php';
 					$prefix = ob_get_clean() . "\n";
-					//TODO -- FILTER PREFIX COMMENT?
+					// TODO -- FILTER PREFIX COMMENT?
 					$output_dir = dirname( $target );
 					if ( ! is_dir( $output_dir ) ) {
 						mkdir( $output_dir, 0755, true );
 					}
-					$output_hash                                         = hash( 'crc32b', $target );
+					$output_hash = hash( 'crc32b', $target );
 					$this->options['output_hashes'][ $directory ]['css'] = $output_hash;
-					$result                                              = file_put_contents( $target, $prefix . $compiled_css );
+					$result = file_put_contents( $target, $prefix . $compiled_css );
 					if ( $result === false ) {
-						//TODO -- RAISE ERRORS IN A LOGICAL WAY
-						$error = "error writing to file " . $target;
+						// TODO -- RAISE ERRORS IN A LOGICAL WAY
+						$error = 'error writing to file ' . $target;
 						$this->set_error_message( $error, 'scss' );
 					} else {
 						if ( ! isset( $this->options['folder_hashes'][ $directory ] ) ) {
@@ -497,7 +499,7 @@ if ( ! class_exists( "WP_Compiler" ) ) {
 					}
 				}
 			} else {
-				$error = "file not found " . $source;
+				$error = 'file not found ' . $source;
 				$this->set_error_message( $error, 'scss' );
 			}
 		}
@@ -507,7 +509,7 @@ if ( ! class_exists( "WP_Compiler" ) ) {
 			if ( ! $this->options['dev_mode'] ) {
 				return '';
 			};
-			$message = preg_replace( "/[\r\n]+/", "\a", $message );
+			$message = preg_replace( "/[\r\n]+/", '\a', $message );
 			ob_start();
 			include 'includes/templates/error-message.php';
 			return ob_get_clean();
@@ -519,7 +521,7 @@ if ( ! class_exists( "WP_Compiler" ) ) {
 			if ( file_exists( $source ) ) {
 
 				$current_hash = $this->get_directory_hash( $directory );
-				$saved_hash   = "";
+				$saved_hash   = '';
 				if ( isset( $this->options['folder_hashes'][ $directory ]['js'] ) ) {
 					$saved_hash = $this->options['folder_hashes'][ $directory ]['js'];
 				}
@@ -529,9 +531,9 @@ if ( ! class_exists( "WP_Compiler" ) ) {
 					include 'includes/templates/js-header.php';
 					$prefix = ob_get_clean() . "\n";
 					if ( ! $this->options['dev_mode'] && ! apply_filters( 'wp_compiler_skip_minification', false ) ) {
-						$files = $this->build_file_list($source);
-						$js          = new MatthiasMullie\Minify\JS();
-						foreach ($files as $file) {
+						$files = $this->build_file_list( $source );
+						$js    = new MatthiasMullie\Minify\JS();
+						foreach ( $files as $file ) {
 							$js->add( $file );
 						}
 						$compiled_js = $js->minify();
@@ -544,27 +546,27 @@ if ( ! class_exists( "WP_Compiler" ) ) {
 							$directory = trailingslashit( $source );
 							if ( is_array( $files ) && count( $files ) > 0 ) {
 
-								$raw_js =  $this->combine_raw_js( $files, $directory );
+								$raw_js = $this->combine_raw_js( $files, $directory );
 
 							}
-						} else if ( is_file( $source ) ) {
+						} elseif ( is_file( $source ) ) {
 							$raw_js = $this->build_raw_js( $source );
 						}
 						$final_js = $prefix . $raw_js;
 					}
 					$final_js = apply_filters( 'wp_compiler_final_js_filter', $final_js );
 
-					//TODO -- FILTER PREFIX COMMENT?
+					// TODO -- FILTER PREFIX COMMENT?
 					$output_dir = dirname( $target );
 					if ( ! is_dir( $output_dir ) ) {
 						mkdir( $output_dir, 0775, true );
 					}
 					$output_hash                                        = hash( 'crc32b', $target );
 					$this->options['output_hashes'][ $directory ]['js'] = $output_hash;
-					$result                                             = file_put_contents( $target, $final_js );
+					$result = file_put_contents( $target, $final_js );
 					if ( $result === false ) {
-						//TODO -- RAISE ERRORS IN A LOGICAL WAY
-						$error = "error writing to file " . $target;
+						// TODO -- RAISE ERRORS IN A LOGICAL WAY
+						$error = 'error writing to file ' . $target;
 						$this->set_error_message( $error, 'js' );
 					} else {
 						if ( ! isset( $this->options['folder_hashes'][ $directory ] ) ) {
@@ -575,17 +577,17 @@ if ( ! class_exists( "WP_Compiler" ) ) {
 					}
 				}
 			} else {
-				$error = "file not found " . $source;
+				$error = 'file not found ' . $source;
 				$this->set_error_message( $error, 'js' );
 			}
 		}
 
-		protected function build_file_list ($source) {
+		protected function build_file_list( $source ) {
 			$files = array();
-			if (is_dir($source)) {
-				$files     = $this->get_files( $source );
-			} else if (is_file($source)) {
-				$files = $this->parse_manifest($source);
+			if ( is_dir( $source ) ) {
+				$files = $this->get_files( $source );
+			} elseif ( is_file( $source ) ) {
+				$files = $this->parse_manifest( $source );
 			}
 			return $files;
 		}
@@ -594,8 +596,8 @@ if ( ! class_exists( "WP_Compiler" ) ) {
 			if ( is_file( $manifest ) ) {
 				$files = $this->parse_manifest( $manifest );
 			} else {
-				//TODO -- RAISE ERRORS IN A LOGICAL WAY
-				$error = "manifest " . $manifest . " doesn't exist";
+				// TODO -- RAISE ERRORS IN A LOGICAL WAY
+				$error = 'manifest ' . $manifest . " doesn't exist";
 				$this->set_error_message( $error, 'js' );
 			}
 			$raw_js = $this->combine_raw_js( $files, $directory );
@@ -606,10 +608,10 @@ if ( ! class_exists( "WP_Compiler" ) ) {
 		protected function parse_manifest( $manifest ) {
 			$files     = array();
 			$directory = trailingslashit( dirname( $manifest ) );
-			$handle    = fopen( $manifest, "r" );
+			$handle    = fopen( $manifest, 'r' );
 			if ( $handle ) {
 				$line_num = 1;
-				//TODO -- MAYBE ADD SUPPORT FOR DIRECTORY WITHOUT MANIFEST
+				// TODO -- MAYBE ADD SUPPORT FOR DIRECTORY WITHOUT MANIFEST
 				while ( ( $line = fgets( $handle ) ) !== false ) {
 					$line      = trim( $line );
 					$full_path = $directory . $line;
@@ -622,7 +624,7 @@ if ( ! class_exists( "WP_Compiler" ) ) {
 						if ( is_file( $file ) ) {
 							$files[] = $file;
 						} else {
-							$error = "File " . $file . " doesn't exist in manifest " . $manifest;
+							$error = 'File ' . $file . " doesn't exist in manifest " . $manifest;
 							$this->set_error_message( $error, 'js' );
 						}
 					} elseif ( substr( $line, - 9 ) === '.manifest' ) {
@@ -631,16 +633,16 @@ if ( ! class_exists( "WP_Compiler" ) ) {
 							$sub_files = $this->parse_manifest( $sub_manifest );
 							$files     = array_unique( array_merge( $files, $sub_files ) );
 						} else {
-							//TODO -- RAISE ERRORS IN A LOGICAL WAY
-							$error = "sub-manifest " . $sub_manifest . " doesn't exist <br>in manifest " . $manifest . "<br>at line " . $line_num;
+							// TODO -- RAISE ERRORS IN A LOGICAL WAY
+							$error = 'sub-manifest ' . $sub_manifest . " doesn't exist <br>in manifest " . $manifest . '<br>at line ' . $line_num;
 							$this->set_error_message( $error, 'js' );
 						}
 					} // Handle a directory in the manifest file list //
 					elseif ( is_dir( $full_path ) ) {
 						$files = array_unique( array_merge( $files, $this->get_files( $full_path ) ) );
 					} else {
-						//TODO -- RAISE ERRORS IN A LOGICAL WAY
-						$error = "manifest " . $manifest . " is corrupt on line" . $line_num;
+						// TODO -- RAISE ERRORS IN A LOGICAL WAY
+						$error = 'manifest ' . $manifest . ' is corrupt on line' . $line_num;
 						$this->set_error_message( $error, 'js' );
 					}
 					$line_num ++;
@@ -657,12 +659,12 @@ if ( ! class_exists( "WP_Compiler" ) ) {
 				foreach ( $files as $file ) {
 					if ( is_file( $file ) ) {
 						$fname   = $this->strip_prefix( $file, $root );
-						$text = "/* @@ START FILE: " . $fname . "*/\n";
-						$text .= file_get_contents( $file ) . "\n";
-						$text .= "/* @@ END FILE: " . $fname . "*/";
+						$text    = '/* @@ START FILE: ' . $fname . "*/\n";
+						$text   .= file_get_contents( $file ) . "\n";
+						$text   .= '/* @@ END FILE: ' . $fname . '*/';
 						$lines[] = $text;
 					} else {
-						//TODO -- RAISE ERRORS IN A LOGICAL WAY
+						// TODO -- RAISE ERRORS IN A LOGICAL WAY
 					}
 				}
 			}
@@ -708,13 +710,13 @@ if ( ! class_exists( "WP_Compiler" ) ) {
 			if ( $error ) {
 				$this->errors[] = array(
 					'type'    => $type,
-					'message' => $error
+					'message' => $error,
 				);
 			}
 			$this->set_option( 'error_messages', $this->errors );
 		}
 
-		protected function get_sourcemap_filename_from_file ($file) {
+		protected function get_sourcemap_filename_from_file( $file ) {
 			return $file . '.map';
 		}
 	}
