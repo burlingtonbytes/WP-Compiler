@@ -1,12 +1,27 @@
 <?php
-/*
-	Plugin Name: WP Compiler
-	Plugin URI: https://github.com/burlingtonbytes/WP-Compiler
-	Description: Compiles and minifies SCSS, LESS and JS
-	Author: Bytes Co
-	Author URI: https://bytes.co
-	Version: 1.0.0
-*/
+/**
+ * Plugin Name:  WP Compiler
+ * Plugin URI:   https://github.com/burlingtonbytes/WP-Compiler
+ * Description:  Compiles and minifies SCSS, LESS and JS.
+ * Version:      1.0.0
+ * Requires PHP: 5.6
+ * Author:       Bytes Co
+ * Author URI:   https://bytes.co
+ * License:      GPL v2 or later
+ * License URI:  https://www.gnu.org/licenses/gpl-2.0.html
+ * Text Domain:  wp_compiler
+ *
+ * WP Compiler is free software: you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation, either version 2 of the License, or any later version.
+ *
+ * WP Compiler is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with
+ * WP Compiler. If not, see https://www.gnu.org/licenses/gpl-2.0.html.
+ */
 
 if ( ! defined( 'ABSPATH' ) ) {
 	die();
