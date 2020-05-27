@@ -38,13 +38,13 @@ class ComposerStaticInit85469b406cf957d0a5fdc64cf428755c
         array (
             'Less' => 
             array (
-                0 => __DIR__ . '/..' . '/oyejorge/less.php/lib',
+                0 => __DIR__ . '/..' . '/wikimedia/less.php/lib',
             ),
         ),
     );
 
     public static $classMap = array (
-        'lessc' => __DIR__ . '/..' . '/oyejorge/less.php/lessc.inc.php',
+        'lessc' => __DIR__ . '/..' . '/wikimedia/less.php/lessc.inc.php',
     );
 
     public static function getInitializer(ClassLoader $loader)
